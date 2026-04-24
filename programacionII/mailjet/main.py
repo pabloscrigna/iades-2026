@@ -1,25 +1,25 @@
-import os
-
-from dotenv import load_dotenv
-
-from mail import MailSender
+from mail import client_email
 
 
-load_dotenv()
+def main():
 
+    mail_to = "ivangmclp@gmail.com"
+    mail_from = "pscrigna@gmail.com"
+    mail_from_name = "Pablo"
+    nombre_destino = "Ivan"
 
-def main(api_key, api_secret):
-    print("Programa para envio de correo")
-    email_data = {}
-    email_data["destino_email"] = "pscrigna@gmail.com"
-    email_data["subject"] = "Mail de prueba"
-    email_data["from_email"] = "pscrigna@gmail.com"
-    email_data["from_name"] = "Pablo"
-    envia_data["html_body"] = "<h1>Este es un mail de prueba enviado desde mailjet</h1>"
-    envia_mail(api_key, api_secret, email_data)
+    email_data = {
+        "destino_email": mail_to,
+        "subject": "Mail de prueba",
+        "from_email": mail_from,
+        "from_name": mail_from_name,
+        "html_body": f"<h1> Hola {nombre_destino}, este es un mail de prueba</h1>",
+    }
+    response = client_email.envia_mail(email_data)
+    status_code, res_json = response
+    print("status code:", status_code)
+    print("response: ", response)
 
 
 if __name__ == "__main__":
-    api_key = os.getenv("API_KEY")
-    api_secret = os.getenv("API_SECRET")
-    main(api_key, api_secret)
+    main()
